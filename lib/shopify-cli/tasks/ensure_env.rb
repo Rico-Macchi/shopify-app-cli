@@ -50,7 +50,7 @@ module ShopifyCli
           ShopifyCli::Tasks::CreateApiClient.call(@ctx, org_id: org_id, title: title, type: type)
         else
           CLI::UI::Prompt.ask(@ctx.message('core.tasks.ensure_env.app_select')) do |handler|
-            apps.each { |app| handler.option(app["title"]) { app } }
+            apps.each { |app| handler.option(app.fetch("title")) { app } }
           end
         end
       end
