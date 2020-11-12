@@ -23,10 +23,9 @@ module ShopifyCli
       def wants_to_run_against_shopify_org?
         # TODO: colour etc.
         @ctx.puts("We've identified you as Shopify employee")
-        CLI::UI::Prompt.confirm(
-          "Do you want to run against the Shopify organization?",
-          default: false
-        )
+
+        message = ctx.message('core.tasks.select_org_and_shop.first_party')
+        CLI::UI::Prompt.confirm(message, default: false)
       end
 
       def response(organization_id, shop_domain)
