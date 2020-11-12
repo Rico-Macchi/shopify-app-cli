@@ -91,6 +91,7 @@ module ShopifyCli
         content['shopify_organization'] = true if Shopifolk.acting_as_shopify_organization?
 
         ctx.write('.shopify-cli.yml', YAML.dump(content))
+        clear
       end
 
       def project_name
