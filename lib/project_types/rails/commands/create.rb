@@ -2,6 +2,7 @@
 module Rails
   module Commands
     class Create < ShopifyCli::SubCommand
+      include ProjectTypes::PartnersUrl
       USER_AGENT_CODE = <<~USERAGENT
         module ShopifyAPI
           class Base < ActiveResource::Base
@@ -55,7 +56,7 @@ module Rails
           scopes: 'write_products,write_customers,write_draft_orders',
         ).write(@ctx)
 
-        partners_url = partners_url_for_app_client(api_client)
+        partners_url = partners_url_for(form.organization_id, api_client['id'])
 
         @ctx.puts(@ctx.message('apps.create.info.created', form.title, partners_url))
         @ctx.puts(@ctx.message('apps.create.info.serve', form.name, ShopifyCli::TOOL_NAME))
@@ -171,15 +172,6 @@ module Rails
 
       def install_gem(name, version = nil)
         Gem.install(@ctx, name, version)
-      end
-
-      # NOTE: currently duplicated in node/commands/create.rb
-      def partners_url_for_app_client(api_client)
-        if ShopifyCli::Shopifolk.acting_as_shopify_organization?
-          "#{partners_endpoint}/internal/apps/#{api_client['id']}"
-        else
-          "#{partners_endpoint}/#{form.organization_id}/apps/#{api_client['id']}"
-        end
       end
 
       def partners_endpoint

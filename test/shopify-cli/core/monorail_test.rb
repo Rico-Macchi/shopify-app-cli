@@ -194,7 +194,7 @@ module ShopifyCli
       def stub_shopify_org_confirmation(response: true)
         CLI::UI::Prompt
           .stubs(:confirm)
-          .with("Do you want to run against the Shopify organization?", anything)
+          .with(includes("Are you building a 1P (1st Party) app?"), anything)
           .returns(response)
       end
     end
