@@ -2,7 +2,6 @@
 module Rails
   module Commands
     class Create < ShopifyCli::SubCommand
-      include ProjectTypes::PartnersUrl
       USER_AGENT_CODE = <<~USERAGENT
         module ShopifyAPI
           class Base < ActiveResource::Base
@@ -172,6 +171,13 @@ module Rails
 
       def install_gem(name, version = nil)
         Gem.install(@ctx, name, version)
+      end
+
+      def partners_url_for(organization_id, api_client_id)
+        if ShopifyCli::Shopifolk.acting_as_shopify_organization?
+          organization_id = 'internal'
+        end
+        "#{partners_endpoint}/#{organization_id}/apps/#{api_client_id}"
       end
 
       def partners_endpoint

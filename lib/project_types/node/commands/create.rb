@@ -3,7 +3,6 @@
 module Node
   module Commands
     class Create < ShopifyCli::SubCommand
-      include ProjectTypes::PartnersUrl
 
       options do |parser, flags|
         # backwards compatibility allow 'title' for now
@@ -115,6 +114,22 @@ module Node
         rescue Errno::ENOENT => e
           @ctx.debug(e)
         end
+      end
+
+      def partners_url_for(organization_id, api_client_id)
+        if ShopifyCli::Shopifolk.acting_as_shopify_organization?
+          organization_id = 'internal'
+        end
+        "#{partners_endpoint}/#{organization_id}/apps/#{api_client_id}"
+      end
+
+      def partners_endpoint
+        domain = if @ctx.getenv(ShopifyCli::PartnersAPI::LOCAL_DEBUG)
+          'partners.myshopify.io'
+        else
+          'partners.shopify.com'
+        end
+        "https://#{domain}"
       end
     end
   end
