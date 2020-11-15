@@ -1,7 +1,10 @@
 # frozen_string_literal: true
+
 module Node
   module Commands
     class Create < ShopifyCli::SubCommand
+      include ProjectTypes::PartnersUrl
+
       options do |parser, flags|
         # backwards compatibility allow 'title' for now
         parser.on('--title=TITLE') { |t| flags[:title] = t }
@@ -40,7 +43,7 @@ module Node
           scopes: 'write_products,write_customers,write_draft_orders',
         ).write(@ctx)
 
-        partners_url = partners_url_for_app_client(api_client)
+        partners_url = partners_url_for(form.organization_id, api_client['id'])
 
         @ctx.puts(@ctx.message('apps.create.info.created', form.title, partners_url))
         @ctx.puts(@ctx.message('apps.create.info.serve', form.name, ShopifyCli::TOOL_NAME))
@@ -111,24 +114,6 @@ module Node
         rescue Errno::ENOENT => e
           @ctx.debug(e)
         end
-      end
-
-      # NOTE: currently duplicated in rails/commands/create.rb
-      def partners_url_for_app_client(api_client)
-        if ShopifyCli::Shopifolk.acting_as_shopify_organization?
-          "#{partners_endpoint}/internal/apps/#{api_client['id']}"
-        else
-          "#{partners_endpoint}/#{form.organization_id}/apps/#{api_client['id']}"
-        end
-      end
-
-      def partners_endpoint
-        domain = if @ctx.getenv(ShopifyCli::PartnersAPI::LOCAL_DEBUG)
-          'partners.myshopify.io'
-        else
-          'partners.shopify.com'
-        end
-        "https://#{domain}"
       end
     end
   end
