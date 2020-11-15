@@ -35,6 +35,7 @@ module Node
           title: form.title,
           type: form.type,
         )
+        pp api_client
 
         ShopifyCli::Resources::EnvFile.new(
           api_key: api_client["apiKey"],
