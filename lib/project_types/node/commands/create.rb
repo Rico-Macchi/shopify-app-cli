@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 module Node
   module Commands
     class Create < ShopifyCli::SubCommand
