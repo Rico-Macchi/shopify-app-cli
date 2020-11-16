@@ -28,3 +28,4 @@ Fixes #0000 <!-- link to issue if one exists -->
   and then making the CHANGELOG update once you know the PR number.
 -->
 - [ ] I've added a CHANGELOG entry for this PR
+- [ ] I've updated the Shopify Development Handbook
