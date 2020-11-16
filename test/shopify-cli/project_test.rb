@@ -53,8 +53,7 @@ module ShopifyCli
     end
 
     def test_write_includes_identifiers
-      Dir.stubs(:pwd).returns(@context.root)
-      FileUtils.touch(".shopify-cli.yml")
+      create_empty_config
       File.write(".shopify-cli.yml", YAML.dump({}))
       ShopifyCli::Project.write(
         @context,

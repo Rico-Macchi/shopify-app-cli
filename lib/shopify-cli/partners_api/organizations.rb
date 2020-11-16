@@ -4,7 +4,6 @@ module ShopifyCli
       class << self
         def fetch_all(ctx)
           resp = PartnersAPI.query(ctx, 'all_organizations')
-          pp resp
           (resp.dig('data', 'organizations', 'nodes') || []).map do |org|
             org['stores'] = (org.dig('stores', 'nodes') || [])
             org

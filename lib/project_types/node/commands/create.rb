@@ -2,7 +2,6 @@
 module Node
   module Commands
     class Create < ShopifyCli::SubCommand
-
       options do |parser, flags|
         # backwards compatibility allow 'title' for now
         parser.on('--title=TITLE') { |t| flags[:title] = t }
@@ -33,7 +32,6 @@ module Node
           title: form.title,
           type: form.type,
         )
-        pp api_client
 
         ShopifyCli::Resources::EnvFile.new(
           api_key: api_client["apiKey"],
