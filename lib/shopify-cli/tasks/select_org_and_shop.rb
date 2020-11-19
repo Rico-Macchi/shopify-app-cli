@@ -19,12 +19,6 @@ module ShopifyCli
 
       private
 
-      def wants_to_run_against_shopify_org?
-        ctx.puts(ctx.message('core.tasks.select_org_and_shop.identified_as_shopify'))
-        message = ctx.message('core.tasks.select_org_and_shop.first_party')
-        CLI::UI::Prompt.confirm(message, default: false)
-      end
-
       def response(organization_id, shop_domain)
         {
           organization_id: organization_id,
