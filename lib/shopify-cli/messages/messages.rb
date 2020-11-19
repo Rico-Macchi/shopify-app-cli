@@ -310,8 +310,7 @@ module ShopifyCli
               organization_not_found: "Cannot find a partner organization with that ID",
               partners_notice: "Please visit https://partners.shopify.com/ to create a partners account",
             },
-            first_party: "Are you building a 1P (1st Party) app? Learn more about 1P apps: "\
-              "https://development.shopify.io/engineering/developing_at_Shopify/apps/first-party_apps/",
+            first_party: "Are you building a 1P (1st Party) app?",
             identified_as_shopify: "We've identified you as a {{green:Shopify}} employee.",
             organization: "Partner organization {{green:%s (%s)}}",
             organization_select: "Select partner organization",
